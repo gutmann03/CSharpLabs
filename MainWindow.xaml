@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSharpLabs"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Визначувач віку :)" Height="260" Width="400" ResizeMode="NoResize">
     <Grid>
-        
+        <StackPanel>
+            <TextBlock Text="Оберіть дату народження:" Margin="10" />
+            <DatePicker SelectedDate="{Binding BirthDate}" Margin="10"/>
+
+            <TextBlock Text="{Binding Age}" Margin="10"/>
+
+            <TextBlock Text="{Binding WesternZodiac}" Margin="10"/>
+
+            <TextBlock Text="{Binding ChineseZodiac}" Margin="10"/>
+
+            <TextBlock Text="{Binding BirthdayMessage}" Foreground="Green" Margin="10"/>
+        </StackPanel>
     </Grid>
 </Window>
