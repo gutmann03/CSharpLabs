@@ -55,8 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MainViewModel.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="PersonViewModel.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="Zodiacs.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
