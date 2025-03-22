@@ -7,10 +7,18 @@ namespace CSharpLabs
     /// </summary>
     public partial class MainWindow : Window
     {
+        private PersonViewModel _viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            _viewModel = new PersonViewModel();
+            DataContext = _viewModel;
+        }
+
+        private async void ProceedButton_Click(object sender, RoutedEventArgs e)
+        {
+            await _viewModel.ProceedAsync();
         }
     }
 }
