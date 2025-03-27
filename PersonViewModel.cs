@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Text;
+using System.Threading;
 
 namespace CSharpLabs
 {
@@ -136,10 +137,11 @@ namespace CSharpLabs
             {
                 IsNotBusy = false;
                 UpdateProceedButtonState();
-
-                _person = new Person(FirstName, LastName, Email, BirthDate);
-
-                await Task.Delay(1000);
+                _person = await Task.Run(() =>
+                {
+                    Thread.Sleep(1000);
+                    return new Person(FirstName, LastName, Email, BirthDate);
+                });
 
                 SunSign = _person.SunSign;
                 ChineseSign = _person.ChineseSign;
