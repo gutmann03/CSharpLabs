@@ -33,8 +33,13 @@ namespace CSharpLabs
             Email = email;
             BirthDate = birthDate;
 
+            if (!StringsValidator.ValidateName(firstName)) throw new InvalidNameException(InvalidNameType.FirstName);
+            if (!StringsValidator.ValidateName(lastName)) throw new InvalidNameException(InvalidNameType.LastName);
+
             _age = CalculateAge(birthDate);
-            if (!IsAgeValid(birthDate)) throw new ArgumentException($"Некоректна дата народження. Допустимий вік від {Person.MinAge} до {Person.MaxAge} років"); ;
+            if (birthDate > DateTime.Now) throw new UnBurnException();
+            if (_age > Person.MaxAge) throw new UnBurnException();
+            if (!StringsValidator.ValidateEmail(email)) throw new InvalidEmailException();
 
             _isAdult = _age >= 18;
             _sunSign = Zodiacs.GetWesternZodiac(BirthDate);
@@ -52,11 +57,6 @@ namespace CSharpLabs
             int age = currentDate.Year - birthDate.Year;
             if (birthDate.Date > DateTime.Now.AddYears(-age)) age--;
             return age;
-        }
-
-        private bool IsAgeValid(DateTime birthDate)
-        {
-            return birthDate <= DateTime.Now && _age <= Person.MaxAge;
         }
 
         public bool IsAdult => _isAdult;
