@@ -8,16 +8,16 @@
         Title="Person magic app" Height="350" Width="400" ResizeMode="NoResize">
     <Grid>
         <StackPanel>
-            <TextBlock Text="Ім'я" Margin="10,10,10,0" />
+            <TextBlock Text="First name" Foreground="{Binding FirstNameColor}" Margin="10,10,10,0" />
             <TextBox Text="{Binding FirstName}" IsEnabled="{Binding IsNotBusy}" x:Name="FirstNameTextBox" Margin="10,0,10,0" VerticalAlignment="Top" />
 
-            <TextBlock Text="Прізвище" Margin="10,10,10,0" />
+            <TextBlock Text="Last name" Foreground="{Binding LastNameColor}" Margin="10,10,10,0" />
             <TextBox Text="{Binding LastName}" IsEnabled="{Binding IsNotBusy}" x:Name="LastNameTextBox" Margin="10,0,10,0" />
 
-            <TextBlock Text="Email" Margin="10,10,10,0" />
+            <TextBlock Text="Email" Foreground="{Binding EmailColor}" Margin="10,10,10,0" />
             <TextBox Text="{Binding Email}" IsEnabled="{Binding IsNotBusy}" x:Name="EmailTextBox" Margin="10,0,10,0" VerticalAlignment="Top" />
 
-            <TextBlock Text="Дата народження" Margin="10,10,10,0" />
+            <TextBlock Text="Date of birth" Foreground="{Binding BirthDateColor}" Margin="10,10,10,0" />
             <DatePicker SelectedDate="{Binding BirthDate}" IsEnabled="{Binding IsNotBusy}" x:Name="BirthDatePicker" Margin="10,0,10,0" VerticalAlignment="Top" />
 
             <Button Content="Proceed" Margin="10,18,10,0" VerticalAlignment="Top" Click="ProceedButton_Click" IsEnabled="{Binding IsProceedButtonEnabled}" />

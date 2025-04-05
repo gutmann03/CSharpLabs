@@ -5,12 +5,16 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Text;
 using System.Threading;
+using System.Windows.Media;
 
 namespace CSharpLabs
 {
     public class PersonViewModel : INotifyPropertyChanged
     {
         private readonly object _locker = new object();
+
+        private static readonly string _colorBlack = Color.FromRgb(0, 0, 0).ToString();
+        private static readonly string _colorRed = Color.FromRgb(255, 0, 0).ToString();
 
         private Person _person;
 
@@ -27,6 +31,11 @@ namespace CSharpLabs
         private bool _isNotBusy;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private string _firstNameColor;
+        private string _lastNameColor;
+        private string _emailColor;
+        private string _birthDateColor;
 
         public string FirstName
         {
@@ -112,6 +121,46 @@ namespace CSharpLabs
         
         public bool IsBirthday { get; private set; }
 
+        public string FirstNameColor
+        {
+            get => _firstNameColor;
+            set
+            {
+                _firstNameColor = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string LastNameColor
+        {
+            get => _lastNameColor;
+            set
+            {
+                _lastNameColor = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string EmailColor
+        {
+            get => _emailColor;
+            set
+            {
+                _emailColor = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string BirthDateColor
+        {
+            get => _birthDateColor;
+            set
+            {
+                _birthDateColor = value;
+                OnPropertyChanged();
+            }
+        }
+
         public PersonViewModel()
         {
             _firstName = string.Empty;
@@ -120,6 +169,11 @@ namespace CSharpLabs
             _birthDate = DateTime.Now;
             _isProceedButtonEnabled = false;
             _isNotBusy = true;
+
+            _firstNameColor = _colorBlack;
+            _lastNameColor = _colorBlack;
+            _emailColor = _colorBlack;
+            _birthDateColor = _colorBlack;
         }
 
         private void UpdateProceedButtonState()
@@ -157,10 +211,47 @@ namespace CSharpLabs
 
                 ShowMessage(BuildResultMessage());
             }
-            catch (ArgumentException ex)
+            catch (UnBurnException ex)
             {
+                BirthDateColor = _colorRed;
                 ShowMessage(ex.Message);
+                BirthDateColor = _colorBlack;
                 BirthDate = DateTime.Now;
+            }
+            catch (TooOldException ex)
+            {
+                BirthDateColor = _colorRed;
+                ShowMessage(ex.Message);
+                BirthDateColor = _colorBlack;
+                BirthDate = DateTime.Now;
+            }
+            catch (InvalidEmailException ex)
+            {
+                EmailColor = _colorRed;
+                ShowMessage(ex.Message);
+                EmailColor = _colorBlack;
+                Email = string.Empty;
+            }
+            catch (InvalidNameException ex)
+            {
+                switch (ex.Type)
+                {
+                    case InvalidNameType.FirstName:
+                        FirstNameColor = _colorRed;
+                        ShowMessage(ex.Message);
+                        FirstNameColor = _colorBlack;
+                        FirstName = string.Empty;
+                        break;
+                    case InvalidNameType.LastName:
+                        LastNameColor = _colorRed;
+                        ShowMessage(ex.Message);
+                        LastNameColor = _colorBlack;
+                        LastName = string.Empty;
+                        break;
+                    default:
+                        ShowMessage("Unreachable path!");
+                        break;
+                }
             }
             finally
             {
