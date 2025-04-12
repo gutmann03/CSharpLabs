@@ -176,6 +176,22 @@ namespace CSharpLabs
             _birthDateColor = _colorBlack;
         }
 
+        public PersonViewModel(Person person)
+        {
+            _person = person;
+            _firstName = person.FirstName;
+            _lastName = person.LastName;
+            _email = person.Email;
+            _birthDate = person.BirthDate;
+            _isProceedButtonEnabled = true;
+            _isNotBusy = true;
+
+            _firstNameColor = _colorBlack;
+            _lastNameColor = _colorBlack;
+            _emailColor = _colorBlack;
+            _birthDateColor = _colorBlack;
+        }
+
         private void UpdateProceedButtonState()
         {
             IsProceedButtonEnabled = !string.IsNullOrEmpty(FirstName) &&
@@ -185,8 +201,9 @@ namespace CSharpLabs
                                      IsNotBusy;
         }
 
-        public async Task ProceedAsync()
+        public async Task<bool> ProceedAsync()
         {
+            bool success = false;
             try
             {
                 IsNotBusy = false;
@@ -194,7 +211,12 @@ namespace CSharpLabs
                 _person = await Task.Run(() =>
                 {
                     Thread.Sleep(1000);
-                    return new Person(FirstName, LastName, Email, BirthDate);
+                    if (_person == null)
+                    {
+                        return new Person(FirstName, LastName, Email, BirthDate);
+                    }
+
+                    return new Person(_person.ID, FirstName, LastName, Email, BirthDate);
                 });
 
                 SunSign = _person.SunSign;
@@ -210,27 +232,28 @@ namespace CSharpLabs
                 if (IsBirthday) ShowMessage("Happy birthday!!!");
 
                 ShowMessage(BuildResultMessage());
+                success = true;
             }
             catch (UnBurnException ex)
             {
                 BirthDateColor = _colorRed;
                 ShowMessage(ex.Message);
                 BirthDateColor = _colorBlack;
-                BirthDate = DateTime.Now;
+                BirthDate = _person == null ? DateTime.Now : _person.BirthDate;
             }
             catch (TooOldException ex)
             {
                 BirthDateColor = _colorRed;
                 ShowMessage(ex.Message);
                 BirthDateColor = _colorBlack;
-                BirthDate = DateTime.Now;
+                BirthDate = _person == null ? DateTime.Now : _person.BirthDate;
             }
             catch (InvalidEmailException ex)
             {
                 EmailColor = _colorRed;
                 ShowMessage(ex.Message);
                 EmailColor = _colorBlack;
-                Email = string.Empty;
+                Email = _person == null ? string.Empty : _person.Email;
             }
             catch (InvalidNameException ex)
             {
@@ -240,13 +263,13 @@ namespace CSharpLabs
                         FirstNameColor = _colorRed;
                         ShowMessage(ex.Message);
                         FirstNameColor = _colorBlack;
-                        FirstName = string.Empty;
+                        FirstName = _person == null ? string.Empty : _person.FirstName;
                         break;
                     case InvalidNameType.LastName:
                         LastNameColor = _colorRed;
                         ShowMessage(ex.Message);
                         LastNameColor = _colorBlack;
-                        LastName = string.Empty;
+                        LastName = _person == null ? string.Empty : _person.LastName;
                         break;
                     default:
                         ShowMessage("Unreachable path!");
@@ -258,6 +281,12 @@ namespace CSharpLabs
                 IsNotBusy = true;
                 UpdateProceedButtonState();
             }
+            return success;
+        }
+
+        public Person GetPerson()
+        {
+            return _person;
         }
 
         private void ShowMessage(string msg)

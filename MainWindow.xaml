@@ -5,22 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSharpLabs"
         mc:Ignorable="d"
-        Title="Person magic app" Height="350" Width="400" ResizeMode="NoResize">
-    <Grid>
-        <StackPanel>
-            <TextBlock Text="First name" Foreground="{Binding FirstNameColor}" Margin="10,10,10,0" />
-            <TextBox Text="{Binding FirstName}" IsEnabled="{Binding IsNotBusy}" x:Name="FirstNameTextBox" Margin="10,0,10,0" VerticalAlignment="Top" />
+        Title="Person magic app" Height="600" Width="1000" ResizeMode="NoResize">
+    <DockPanel Margin="10">
 
-            <TextBlock Text="Last name" Foreground="{Binding LastNameColor}" Margin="10,10,10,0" />
-            <TextBox Text="{Binding LastName}" IsEnabled="{Binding IsNotBusy}" x:Name="LastNameTextBox" Margin="10,0,10,0" />
-
-            <TextBlock Text="Email" Foreground="{Binding EmailColor}" Margin="10,10,10,0" />
-            <TextBox Text="{Binding Email}" IsEnabled="{Binding IsNotBusy}" x:Name="EmailTextBox" Margin="10,0,10,0" VerticalAlignment="Top" />
-
-            <TextBlock Text="Date of birth" Foreground="{Binding BirthDateColor}" Margin="10,10,10,0" />
-            <DatePicker SelectedDate="{Binding BirthDate}" IsEnabled="{Binding IsNotBusy}" x:Name="BirthDatePicker" Margin="10,0,10,0" VerticalAlignment="Top" />
-
-            <Button Content="Proceed" Margin="10,18,10,0" VerticalAlignment="Top" Click="ProceedButton_Click" IsEnabled="{Binding IsProceedButtonEnabled}" />
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox x:Name="FilterTextBox" Width="200" Height="25" Margin="0,0,10,0" 
+                     Text="Filter..." TextChanged="FilterTextBox_TextChanged"/>
+            <Button Content="Add" Width="80" Margin="0,0,5,0" Click="AddPerson_Click"/>
+            <Button Content="Edit" Width="80" Margin="0,0,5,0" Click="EditPerson_Click"/>
+            <Button Content="Delete" Width="80" Click="DeletePerson_Click"/>
         </StackPanel>
-    </Grid>
+
+        <DataGrid x:Name="DataGridUsers" AutoGenerateColumns="False" IsReadOnly="True"
+                  CanUserSortColumns="True" SelectionMode="Single">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" SortMemberPath="FirstName"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" SortMemberPath="LastName"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" SortMemberPath="Email"/>
+                <DataGridTextColumn Header="Birth Date" Binding="{Binding BirthDate, StringFormat=d}" SortMemberPath="BirthDate"/>
+                <DataGridTextColumn Header="SunSign" Binding="{Binding SunSign}" SortMemberPath="SunSign"/>
+                <DataGridTextColumn Header="ChineseSign" Binding="{Binding ChineseSign}" SortMemberPath="ChineseSign"/>
+                <DataGridTextColumn Header="IsAdult" Binding="{Binding IsAdult}" SortMemberPath="IsAdult"/>
+                <DataGridTextColumn Header="IsBirthday" Binding="{Binding IsBirthday}" SortMemberPath="IsBirthday"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </Window>
+

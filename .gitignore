@@ -157,3 +157,6 @@ coverage*.info
 *.coveragexml
 
 # NCrunch
+
+# Packages
+packages/

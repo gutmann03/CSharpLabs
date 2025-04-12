@@ -1,0 +1,29 @@
+﻿<Window x:Class="CSharpLabs.PersonEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CSharpLabs"
+        mc:Ignorable="d"
+        Title="Person magic app" Height="350" Width="400" ResizeMode="NoResize">
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="First name" Foreground="{Binding FirstNameColor}" Margin="10,10,10,0" />
+            <TextBox Text="{Binding FirstName}" IsEnabled="{Binding IsNotBusy}" x:Name="FirstNameTextBox" Margin="10,0,10,0" VerticalAlignment="Top" />
+
+            <TextBlock Text="Last name" Foreground="{Binding LastNameColor}" Margin="10,10,10,0" />
+            <TextBox Text="{Binding LastName}" IsEnabled="{Binding IsNotBusy}" x:Name="LastNameTextBox" Margin="10,0,10,0" />
+
+            <TextBlock Text="Email" Foreground="{Binding EmailColor}" Margin="10,10,10,0" />
+            <TextBox Text="{Binding Email}" IsEnabled="{Binding IsNotBusy}" x:Name="EmailTextBox" Margin="10,0,10,0" VerticalAlignment="Top" />
+
+            <TextBlock Text="Date of birth" Foreground="{Binding BirthDateColor}" Margin="10,10,10,0" />
+            <DatePicker SelectedDate="{Binding BirthDate}" IsEnabled="{Binding IsNotBusy}" x:Name="BirthDatePicker" Margin="10,0,10,0" VerticalAlignment="Top" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="ProceedButton" Content="Proceed" Click="ProceedButton_Click" Margin="0,10,10,0" IsEnabled="{Binding IsProceedButtonEnabled}"/>
+                <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Margin="0,10,0,0" IsEnabled="{Binding IsNotBusy}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
