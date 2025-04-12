@@ -2,11 +2,11 @@
 
 namespace CSharpLabs
 {
-    class Person
+    public class Person
     {
         private static int MinAge => 0;
 
-        private static int MaxAge => 135;
+        public static int MaxAge => 135;
 
         private bool _isAdult;
 
@@ -28,6 +28,7 @@ namespace CSharpLabs
 
         public Person(string firstName, string lastName, string email, DateTime birthDate)
         {
+            ID = Guid.NewGuid();
             FirstName = firstName;
             LastName = lastName;
             Email = email;
@@ -51,6 +52,10 @@ namespace CSharpLabs
 
         public Person(string firstName, string lastName, DateTime birthDate) : this(firstName, lastName, string.Empty, birthDate) { }
 
+        public Person(Guid id, string firstName, string lastName, string email, DateTime birthDate) : this(firstName, lastName, email, birthDate) { ID = id; }
+
+        public Person() { }
+
         private static int CalculateAge(DateTime birthDate)
         {
             DateTime currentDate = DateTime.Now;
@@ -66,5 +71,19 @@ namespace CSharpLabs
         public string ChineseSign => _chineseSign;
 
         public bool IsBirthday => _isBirthday;
+
+        public Guid ID { get; set; }
+
+        public static void CopyFields(Person origin, Person other)
+        {
+            origin.FirstName = other.FirstName;
+            origin.LastName = other.LastName;
+            origin.Email = other.Email;
+            origin.BirthDate = other.BirthDate;
+            origin._isBirthday = other._isBirthday;
+            origin._isAdult = other._isAdult;
+            origin._sunSign = other._sunSign;
+            origin._chineseSign = other._chineseSign;
+        }
     }
 }
